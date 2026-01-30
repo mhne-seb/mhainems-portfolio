@@ -1,5 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import { Monitor, ExternalLink, Image } from 'lucide-react';
+import { Monitor, ExternalLink, Image, X, ChevronLeft, ChevronRight } from 'lucide-react';
+
+// Import material images
+import material1 from '@/assets/materials/material-1.jpg';
+import material2 from '@/assets/materials/material-2.jpg';
+import material3 from '@/assets/materials/material-3.jpg';
+import material4 from '@/assets/materials/material-4.jpg';
+import material5 from '@/assets/materials/material-5.jpg';
+import material6 from '@/assets/materials/material-6.jpg';
+import material7 from '@/assets/materials/material-7.jpg';
+import material8 from '@/assets/materials/material-8.jpg';
+import material9 from '@/assets/materials/material-9.jpg';
+import material10 from '@/assets/materials/material-10.jpg';
 
 const systemProjects = [
   {
@@ -23,16 +35,24 @@ const systemProjects = [
 ];
 
 const publicMaterials = [
-  { title: 'Social Media Graphics', category: 'Design' },
-  { title: 'Marketing Collaterals', category: 'Branding' },
-  { title: 'Event Materials', category: 'Visual' },
-  { title: 'Content Creations', category: 'Creative' },
+  { src: material1, title: 'IBITS Officers', category: 'Social Media' },
+  { src: material2, title: 'IBITS Committees', category: 'Infographic' },
+  { src: material3, title: 'Review Sessions', category: 'Event Graphics' },
+  { src: material4, title: 'Academic Achievers', category: 'Recognition' },
+  { src: material5, title: "President's Listers", category: 'Recognition' },
+  { src: material6, title: 'Digital Cupid Dispatch', category: 'Event Graphics' },
+  { src: material7, title: 'Class Officers', category: 'Social Media' },
+  { src: material8, title: 'Org Announcements', category: 'Infographic' },
+  { src: material9, title: 'Papyrus Cache', category: 'Branding' },
+  { src: material10, title: 'iBalita Alert', category: 'News Graphics' },
 ];
 
 const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredSide, setHoveredSide] = useState<'left' | 'right' | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -50,6 +70,36 @@ const Projects = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  const openLightbox = (index: number) => {
+    setCurrentImageIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % publicMaterials.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + publicMaterials.length) % publicMaterials.length);
+  };
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen]);
 
   return (
     <section
@@ -149,42 +199,104 @@ const Projects = () => {
                 </h3>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              {/* Image Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {publicMaterials.map((item, index) => (
                   <div
                     key={item.title}
-                    className="glass-card aspect-square p-6 flex flex-col items-center justify-center text-center group cursor-pointer relative overflow-hidden"
-                    style={{ animationDelay: `${index * 100}ms` }}
+                    onClick={() => openLightbox(index)}
+                    className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group"
+                    style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Image */}
+                    <img 
+                      src={item.src} 
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
                     
-                    {/* Content */}
-                    <div className="relative z-10">
-                      <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Image className="w-8 h-8 text-primary" />
-                      </div>
-                      <h4 className="font-display font-semibold text-foreground mb-1">
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+                      <h4 className="font-display font-semibold text-foreground text-sm leading-tight">
                         {item.title}
                       </h4>
-                      <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                      <span className="text-xs text-primary">
                         {item.category}
                       </span>
                     </div>
+
+                    {/* Border glow effect */}
+                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-xl transition-colors duration-300" />
                   </div>
                 ))}
               </div>
 
-              {/* Additional Note */}
+              {/* Note */}
               <div className="mt-6 p-4 rounded-xl bg-primary/5 border border-primary/20">
                 <p className="text-sm text-muted-foreground text-center">
-                  Creative content including social media graphics, marketing materials, and event designs.
+                  Click on any image to view in full size
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center p-4"
+          onClick={closeLightbox}
+        >
+          {/* Close Button */}
+          <button
+            onClick={closeLightbox}
+            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-secondary/50 border border-border/50 flex items-center justify-center text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all z-10"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Navigation Buttons */}
+          <button
+            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+            className="absolute left-4 md:left-8 w-12 h-12 rounded-full bg-secondary/50 border border-border/50 flex items-center justify-center text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all z-10"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+            className="absolute right-4 md:right-8 w-12 h-12 rounded-full bg-secondary/50 border border-border/50 flex items-center justify-center text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all z-10"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          {/* Image Container */}
+          <div 
+            className="max-w-5xl max-h-[85vh] relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={publicMaterials[currentImageIndex].src}
+              alt={publicMaterials[currentImageIndex].title}
+              className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
+            />
+            
+            {/* Image Info */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent rounded-b-xl">
+              <h4 className="font-display font-bold text-lg text-foreground">
+                {publicMaterials[currentImageIndex].title}
+              </h4>
+              <span className="text-sm text-primary">
+                {publicMaterials[currentImageIndex].category}
+              </span>
+              <span className="text-sm text-muted-foreground ml-4">
+                {currentImageIndex + 1} / {publicMaterials.length}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Background Decoration */}
       <div className="absolute bottom-0 left-1/4 w-1/2 h-1/3 bg-primary/5 rounded-full blur-[150px]" />
