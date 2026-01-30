@@ -11,6 +11,18 @@ import Footer from '@/components/Footer';
 const Index = () => {
   return (
     <div className="relative min-h-screen bg-background overflow-x-hidden">
+      {/* --- DITO NATIN INILAGAY YUNG CSS --- */}
+      {/* Ito yung magpapagalaw sa progress bar sa Projects section */}
+      <style>{`
+        @keyframes progress-bar {
+          0% { transform: scaleX(0); }
+          100% { transform: scaleX(1); }
+        }
+        .animate-progress-bar {
+          animation: progress-bar linear;
+        }
+      `}</style>
+
       {/* Animated Star Background */}
       <StarBackground />
       

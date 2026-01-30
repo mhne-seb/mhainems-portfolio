@@ -1,5 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Monitor, ExternalLink, Image, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import StarBackground from './StarBackground';
+
+// Swiper Imports
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
+// Swiper Styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 // Import material images
 import material1 from '@/assets/materials/material-1.jpg';
@@ -13,24 +23,87 @@ import material8 from '@/assets/materials/material-8.jpg';
 import material9 from '@/assets/materials/material-9.jpg';
 import material10 from '@/assets/materials/material-10.jpg';
 
+// Import AutoCare images
+import ac1 from '@/assets/autocare/1.png';
+import ac2 from '@/assets/autocare/2.png';
+import ac3 from '@/assets/autocare/3.png';
+import ac4 from '@/assets/autocare/4.png';
+import ac5 from '@/assets/autocare/5.png';
+import ac6 from '@/assets/autocare/6.png';
+import ac7 from '@/assets/autocare/7.png';
+import ac8 from '@/assets/autocare/8.png';
+import ac9 from '@/assets/autocare/9.png';
+import ac10 from '@/assets/autocare/10.png';
+import ac11 from '@/assets/autocare/11.png';
+import ac12 from '@/assets/autocare/12.png';
+
+// Import EduRate images
+import er1 from '@/assets/edurate/1.png';
+import er2 from '@/assets/edurate/2.png';
+import er3 from '@/assets/edurate/3.png';
+import er4 from '@/assets/edurate/4.png';
+import er5 from '@/assets/edurate/5.png';
+import er6 from '@/assets/edurate/6.png';
+import er7 from '@/assets/edurate/7.png';
+import er8 from '@/assets/edurate/8.png';
+import er9 from '@/assets/edurate/9.png';
+import er10 from '@/assets/edurate/10.png';
+import er11 from '@/assets/edurate/11.png';
+
+// Import Medicare images
+import mc2 from '@/assets/medicare/2.jpg';
+import mc3 from '@/assets/medicare/3.jpg';
+import mc4 from '@/assets/medicare/4.jpg';
+import mc5 from '@/assets/medicare/5.jpg';
+import mc6 from '@/assets/medicare/6.jpg';
+import mc7 from '@/assets/medicare/7.jpg';
+
+// Import Bear Anonymous Message images
+import bear1 from '@/assets/bear/1.png';
+import bear2 from '@/assets/bear/2.png';
+import bear3 from '@/assets/bear/3.png';
+import bear4 from '@/assets/bear/4.png';
+
+// Import Prototype images (Debug Your Brain)
+import proto1 from '@/assets/prototype/1.jpg';
+import proto2 from '@/assets/prototype/2.jpg';
+import proto3 from '@/assets/prototype/3.jpg';
+
 const systemProjects = [
   {
     title: 'MediCare',
-    description: 'Hospital Management System',
-    tech: ['PHP', 'Laravel', 'MySQL'],
-    gradient: 'from-blue-600 to-cyan-500',
+    role: 'Full-stack Developer',
+    description: 'A Barangay Health Center Management System designed to streamline daily operations and manage patient records efficiently.',
+    tech: ['Java GUI', 'MySQL', 'XAMPP'],
+    images: [mc2, mc3, mc4, mc5, mc6, mc7],
   },
   {
     title: 'AutoCare',
-    description: 'Online Booking System',
-    tech: ['JavaScript', 'PHP', 'CSS'],
-    gradient: 'from-purple-600 to-pink-500',
+    role: 'Front-end Developer',
+    description: 'An Online Booking System for vehicle maintenance, streamlining the process between car owners and service centers with real-time scheduling.',
+    tech: ['PHP', 'Laravel', 'JavaScript', 'MySQL'],
+    images: [ac1, ac2, ac3, ac4, ac5, ac6, ac7, ac8, ac9, ac10, ac11, ac12],
   },
   {
     title: 'EduRate',
-    description: 'School Faculty Evaluation System',
-    tech: ['Python', 'Django', 'PostgreSQL'],
-    gradient: 'from-emerald-600 to-teal-500',
+    role: 'Full-stack Developer',
+    description: 'A comprehensive faculty evaluation system designed to streamline the assessment of school educators through a secure and structured platform.',
+    tech: ['PHP', 'Laravel', 'MySQL'],
+    images: [er1, er2, er3, er4, er5, er6, er7, er8, er9, er10, er11],
+  },
+  {
+    title: 'Bear Anonymous Message',
+    role: 'Full-stack Developer', 
+    description: 'An interactive messaging platform enabling users to receive anonymous feedback and messages through unique profile links.',
+    tech: ['Typescript', 'React', 'MySQL'], 
+    images: [bear1, bear2, bear3, bear4],
+  },
+  {
+    title: 'Debug Your Brain',
+    role: 'Game Developer',
+    description: 'An innovative prototype designed to challenge cognitive skills and problem-solving abilities through interactive interfaces.',
+    tech: ['Figma Prototyping'],
+    images: [proto1, proto2, proto3],
   },
 ];
 
@@ -48,71 +121,45 @@ const publicMaterials = [
 ];
 
 const Projects = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [hoveredSide, setHoveredSide] = useState<'left' | 'right' | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
       { threshold: 0.1 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const openLightbox = (index: number) => {
+  const openLightbox = (index) => {
     setCurrentImageIndex(index);
     setLightboxOpen(true);
   };
 
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % publicMaterials.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + publicMaterials.length) % publicMaterials.length);
-  };
-
-  // Handle keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!lightboxOpen) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxOpen]);
+  const closeLightbox = () => setLightboxOpen(false);
+  const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % publicMaterials.length);
+  const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + publicMaterials.length) % publicMaterials.length);
 
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="relative py-32 overflow-hidden"
-    >
-      <div className="container mx-auto px-6">
+    <section id="projects" ref={sectionRef} className="relative py-32 overflow-hidden bg-transparent">
+      {/* BACKGROUND INTEGRATION */}
+      <div className="absolute inset-0 z-0">
+        <StarBackground />
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
+          
           {/* Section Header */}
           <div className={`text-center mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <span className="text-primary text-sm uppercase tracking-widest font-medium">
-              Portfolio
+              PORTFOLIO
             </span>
             <h2 className="section-title mt-4">
               Featured Projects
@@ -122,121 +169,98 @@ const Projects = () => {
             </p>
           </div>
 
-          {/* Split Layout */}
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Left: System Projects */}
-            <div
-              className={`relative transition-all duration-500 ${
-                hoveredSide === 'right' ? 'lg:opacity-50 lg:scale-[0.98]' : ''
-              } ${isVisible ? 'animate-fade-in-left delay-200' : 'opacity-0'}`}
-              onMouseEnter={() => setHoveredSide('left')}
-              onMouseLeave={() => setHoveredSide(null)}
-            >
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Monitor className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="text-xl font-display font-semibold text-foreground">
-                  System Projects
-                </h3>
-              </div>
-
-              <div className="space-y-6">
-                {systemProjects.map((project, index) => (
-                  <div
-                    key={project.title}
-                    className="glass-card p-6 group relative overflow-hidden"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    {/* Gradient Overlay */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-r ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-                    />
-
-                    <div className="relative z-10">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h4 className="text-xl font-display font-bold text-foreground group-hover:text-primary transition-colors">
-                            {project.title}
-                          </h4>
-                          <p className="text-muted-foreground mt-1">
-                            {project.description}
-                          </p>
-                        </div>
-                        <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100" />
-                      </div>
-
-                      <div className="flex flex-wrap gap-2 mt-4">
-                        {project.tech.map((tech) => (
-                          <span
-                            key={tech}
-                            className="skill-chip text-xs"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+          {/* 1. SYSTEM PROJECTS */}
+          <div className="flex flex-col gap-32 mb-40">
+            {systemProjects.map((project, index) => (
+              <div 
+                key={project.title}
+                className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center`}
+              >
+                <div className="w-full lg:w-3/5">
+                  <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl group">
+                    <Swiper
+                      spaceBetween={0}
+                      centeredSlides={true}
+                      autoplay={{ delay: 3500, disableOnInteraction: false }}
+                      pagination={{ clickable: true, dynamicBullets: true }}
+                      navigation={true}
+                      modules={[Autoplay, Pagination, Navigation]}
+                      className="aspect-video w-full"
+                    >
+                      {project.images.map((img, i) => (
+                        <SwiperSlide key={i}>
+                          <img 
+                            src={img} 
+                            alt={`${project.title} screenshot ${i + 1}`} 
+                            className="w-full h-full object-cover"
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
                   </div>
-                ))}
+                </div>
+
+                <div className="w-full lg:w-2/5 space-y-4">
+                  <h3 className="text-3xl font-bold text-white font-display">{project.title}</h3>
+                  
+                  {/* Render Role */}
+                  {project.role && (
+                    <div className="inline-block px-3 py-1 mb-2 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-semibold tracking-wide">
+                        {project.role}
+                    </div>
+                  )}
+
+                  <p className="text-gray-400 text-lg leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {project.tech.map((tech) => (
+                      <span key={tech} className="px-3 py-1 bg-white/5 border border-white/10 rounded-md text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pt-4 flex gap-4">
+                    <button className="flex items-center gap-2 text-sm font-bold text-white hover:text-primary transition-all group">
+                      Live Preview <ExternalLink size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
               </div>
+            ))}
+          </div>
+
+          {/* 2. PUBLIC MATERIALS */}
+          <div className={`relative ${isVisible ? 'animate-fade-in-up delay-300' : 'opacity-0'}`}>
+            <div className="flex items-center gap-3 mb-10">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                <Image className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="text-2xl font-display font-semibold text-white">Public Materials</h3>
             </div>
 
-            {/* Right: Public Materials */}
-            <div
-              className={`relative transition-all duration-500 ${
-                hoveredSide === 'left' ? 'lg:opacity-50 lg:scale-[0.98]' : ''
-              } ${isVisible ? 'animate-fade-in-right delay-200' : 'opacity-0'}`}
-              onMouseEnter={() => setHoveredSide('right')}
-              onMouseLeave={() => setHoveredSide(null)}
-            >
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
-                  <Image className="w-5 h-5 text-accent" />
-                </div>
-                <h3 className="text-xl font-display font-semibold text-foreground">
-                  Public Materials
-                </h3>
-              </div>
-
-              {/* Image Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {publicMaterials.map((item, index) => (
-                  <div
-                    key={item.title}
-                    onClick={() => openLightbox(index)}
-                    className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group"
-                    style={{ animationDelay: `${index * 50}ms` }}
-                  >
-                    {/* Image */}
-                    <img 
-                      src={item.src} 
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                      <h4 className="font-display font-semibold text-foreground text-sm leading-tight">
-                        {item.title}
-                      </h4>
-                      <span className="text-xs text-primary">
-                        {item.category}
-                      </span>
-                    </div>
-
-                    {/* Border glow effect */}
-                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-xl transition-colors duration-300" />
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {publicMaterials.map((item, index) => (
+                <div
+                  key={item.title}
+                  onClick={() => openLightbox(index)}
+                  // Updated hover effect: Card moves up and scales slightly, image stays static
+                  className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20"
+                >
+                  <img 
+                    src={item.src} 
+                    alt={item.title} 
+                    // Removed 'group-hover:scale-110'
+                    className="w-full h-full object-cover transition-transform duration-700" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    <h4 className="font-bold text-white text-sm">{item.title}</h4>
+                    <span className="text-xs text-primary font-medium">{item.category}</span>
                   </div>
-                ))}
-              </div>
-
-              {/* Note */}
-              <div className="mt-6 p-4 rounded-xl bg-primary/5 border border-primary/20">
-                <p className="text-sm text-muted-foreground text-center">
-                  Click on any image to view in full size
-                </p>
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -244,62 +268,26 @@ const Projects = () => {
 
       {/* Lightbox Modal */}
       {lightboxOpen && (
-        <div 
-          className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center p-4"
-          onClick={closeLightbox}
-        >
-          {/* Close Button */}
-          <button
-            onClick={closeLightbox}
-            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-secondary/50 border border-border/50 flex items-center justify-center text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all z-10"
-          >
-            <X className="w-6 h-6" />
+        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4" onClick={closeLightbox}>
+          <button onClick={closeLightbox} className="absolute top-6 right-6 p-3 text-white hover:bg-white/10 rounded-full transition-all">
+            <X size={32} />
+          </button>
+          
+          <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 p-3 text-white hover:bg-white/10 rounded-full transition-all">
+            <ChevronLeft size={40} />
           </button>
 
-          {/* Navigation Buttons */}
-          <button
-            onClick={(e) => { e.stopPropagation(); prevImage(); }}
-            className="absolute left-4 md:left-8 w-12 h-12 rounded-full bg-secondary/50 border border-border/50 flex items-center justify-center text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all z-10"
-          >
-            <ChevronLeft className="w-6 h-6" />
+          <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 p-3 text-white hover:bg-white/10 rounded-full transition-all">
+            <ChevronRight size={40} />
           </button>
 
-          <button
-            onClick={(e) => { e.stopPropagation(); nextImage(); }}
-            className="absolute right-4 md:right-8 w-12 h-12 rounded-full bg-secondary/50 border border-border/50 flex items-center justify-center text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all z-10"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-
-          {/* Image Container */}
-          <div 
-            className="max-w-5xl max-h-[85vh] relative"
+          <img 
+            src={publicMaterials[currentImageIndex].src} 
+            className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" 
             onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={publicMaterials[currentImageIndex].src}
-              alt={publicMaterials[currentImageIndex].title}
-              className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
-            />
-            
-            {/* Image Info */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent rounded-b-xl">
-              <h4 className="font-display font-bold text-lg text-foreground">
-                {publicMaterials[currentImageIndex].title}
-              </h4>
-              <span className="text-sm text-primary">
-                {publicMaterials[currentImageIndex].category}
-              </span>
-              <span className="text-sm text-muted-foreground ml-4">
-                {currentImageIndex + 1} / {publicMaterials.length}
-              </span>
-            </div>
-          </div>
+          />
         </div>
       )}
-
-      {/* Background Decoration */}
-      <div className="absolute bottom-0 left-1/4 w-1/2 h-1/3 bg-primary/5 rounded-full blur-[150px]" />
     </section>
   );
 };

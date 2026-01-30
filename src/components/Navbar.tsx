@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+// Import the mascot image
+import mascot from '../assets/mascot.png'; 
 
 const navLinks = [
   { name: 'About', href: '#about' },
@@ -31,12 +33,26 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
+        {/* Logo Section */}
         <a
           href="#"
-          className="text-2xl font-display font-bold text-glow transition-all duration-300 hover:opacity-80"
+          // Added 'flex items-center gap-2' to align image and text
+          className="flex items-center gap-2 text-xl md:text-2xl font-display font-bold text-glow transition-all duration-300 hover:opacity-80"
         >
-          <span className="bg-accent-gradient bg-clip-text text-transparent">MS</span>
+          {/* Mascot Image */}
+          <img 
+            src={mascot} 
+            alt="Mascot" 
+            className="h-10 w-auto object-contain" 
+          />
+          {/* Portfolio Text */}
+          <span className="bg-accent-gradient bg-clip-text text-transparent hidden md:block">
+            Mhaine's Portfolio
+          </span>
+          {/* Mobile Text (Optional: Show only 'Portfolio' or keep full text on mobile if space allows) */}
+           <span className="bg-accent-gradient bg-clip-text text-transparent md:hidden">
+            Portfolio
+          </span>
         </a>
 
         {/* Desktop Navigation */}

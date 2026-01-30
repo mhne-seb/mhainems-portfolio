@@ -1,13 +1,95 @@
 import { useEffect, useRef, useState } from 'react';
+// 1. Updated Imports: Removed SiCapcut
+import { 
+  SiHtml5, 
+  SiCss3, 
+  SiTypescript, 
+  SiJavascript, 
+  SiPhp, 
+  SiPython,
+  SiReact,
+  SiTailwindcss,
+  SiGit,
+  SiFigma,
+  SiCanva,
+  SiAdobephotoshop,
+} from 'react-icons/si';
+
+// 2. Added FaFilm here to use as the CapCut icon
+import { FaJava, FaFilm } from 'react-icons/fa';
 
 const skills = [
-  { name: 'HTML', icon: '🌐', color: 'from-orange-500 to-red-500' },
-  { name: 'CSS', icon: '🎨', color: 'from-blue-500 to-cyan-500' },
-  { name: 'TypeScript', icon: '📘', color: 'from-blue-600 to-blue-400' },
-  { name: 'JavaScript', icon: '⚡', color: 'from-yellow-500 to-amber-500' },
-  { name: 'PHP (Laravel)', icon: '🐘', color: 'from-purple-600 to-violet-500' },
-  { name: 'Java', icon: '☕', color: 'from-red-600 to-orange-500' },
-  { name: 'Python', icon: '🐍', color: 'from-green-500 to-emerald-500' },
+  { 
+    name: 'HTML', 
+    icon: <SiHtml5 />, 
+    color: 'from-orange-500 to-red-500' 
+  },
+  { 
+    name: 'CSS', 
+    icon: <SiCss3 />, 
+    color: 'from-blue-500 to-cyan-500' 
+  },
+  { 
+    name: 'JavaScript', 
+    icon: <SiJavascript />, 
+    color: 'from-yellow-400 to-yellow-500' 
+  },
+  { 
+    name: 'TypeScript', 
+    icon: <SiTypescript />, 
+    color: 'from-blue-600 to-blue-400' 
+  },
+  { 
+    name: 'React', 
+    icon: <SiReact />, 
+    color: 'from-cyan-400 to-blue-500' 
+  },
+  { 
+    name: 'Tailwind', 
+    icon: <SiTailwindcss />, 
+    color: 'from-cyan-400 to-teal-500' 
+  },
+  { 
+    name: 'PHP (Laravel)', 
+    icon: <SiPhp />, 
+    color: 'from-purple-600 to-violet-500' 
+  },
+  { 
+    name: 'Java', 
+    icon: <FaJava />, 
+    color: 'from-red-600 to-orange-500' 
+  },
+  { 
+    name: 'Python', 
+    icon: <SiPython />, 
+    color: 'from-green-500 to-emerald-500' 
+  },
+  { 
+    name: 'Git', 
+    icon: <SiGit />, 
+    color: 'from-orange-600 to-red-500' 
+  },
+  { 
+    name: 'Figma', 
+    icon: <SiFigma />, 
+    color: 'from-purple-500 to-pink-500' 
+  },
+  { 
+    name: 'Photoshop', 
+    icon: <SiAdobephotoshop />, 
+    color: 'from-blue-800 to-blue-600' 
+  },
+  { 
+    name: 'Canva', 
+    icon: <SiCanva />, 
+    color: 'from-teal-400 to-blue-500' 
+  },
+  { 
+    name: 'CapCut', 
+    // 3. Updated this to use the generic Film icon
+    icon: <FaFilm />, 
+    color: 'from-gray-900 to-gray-600'
+  },
 ];
 
 const Skills = () => {
@@ -21,7 +103,7 @@ const Skills = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -38,7 +120,7 @@ const Skills = () => {
       className="relative py-32 overflow-hidden"
     >
       <div className="container mx-auto px-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className={`text-center mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <span className="text-primary text-sm uppercase tracking-widest font-medium">
@@ -60,15 +142,17 @@ const Skills = () => {
                 className={`glass-card p-6 group cursor-default text-center ${
                   isVisible ? 'animate-fade-in-up' : 'opacity-0'
                 }`}
-                style={{ animationDelay: `${index * 100}ms` }}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 {/* Skill Icon */}
                 <div className="relative mb-4">
                   <div
                     className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${skill.color} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}
                   />
-                  <span className="absolute inset-0 flex items-center justify-center text-3xl">
-                    {skill.icon}
+                  <span className={`absolute inset-0 flex items-center justify-center text-4xl bg-gradient-to-br ${skill.color} bg-clip-text text-transparent`}>
+                      <span className="text-foreground/80 group-hover:text-foreground transition-colors">
+                        {skill.icon}
+                      </span>
                   </span>
                 </div>
 
@@ -81,21 +165,6 @@ const Skills = () => {
                 <div className="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-500 mx-auto" />
               </div>
             ))}
-
-            {/* More Skills Card */}
-            <div
-              className={`glass-card p-6 flex items-center justify-center text-center ${
-                isVisible ? 'animate-fade-in-up' : 'opacity-0'
-              }`}
-              style={{ animationDelay: `${skills.length * 100}ms` }}
-            >
-              <div>
-                <p className="text-muted-foreground text-sm">& more...</p>
-                <p className="text-xs text-muted-foreground/60 mt-2">
-                  Git • Figma • MySQL • Tailwind
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

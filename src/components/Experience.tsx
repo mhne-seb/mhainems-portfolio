@@ -3,45 +3,51 @@ import { Briefcase, Calendar } from 'lucide-react';
 
 const experiences = [
   {
+    role: 'Web Development Cadet',
+    organization: 'GDG PUP',
+    period: '2025 – Present',
+    type: 'Technical',
+  },
+  {
     role: 'Head of Public Relations & Community Involvement',
     organization: 'IBITS',
-    period: '2024 – Present',
+    period: '2024 – 2025',
     type: 'Leadership',
   },
   {
     role: 'Web Development Team',
     organization: 'AWS Cloud Club PUP',
-    period: '2024 – Present',
+    period: '2024 – 2025',
     type: 'Technical',
   },
   {
     role: 'Creative Content Developer',
     organization: 'AWS Cloud Club PUP',
-    period: '2024 – Present',
+    period: '2024 – 2025',
     type: 'Creative',
   },
   {
     role: 'UI/UX Cadet',
     organization: 'GDG PUP',
-    period: '2024 – Present',
+    period: '2024 – 2025',
     type: 'Design',
   },
   {
     role: 'Senior Marketing Associate',
     organization: 'GDG PUP',
-    period: '2024 – Present',
+    period: '2024 – 2025',
     type: 'Marketing',
   },
   {
     role: 'Mid-Level Back-End Web Developer',
     organization: 'PUP MSC',
-    period: '2024 – Present',
+    period: '2024 – 2025',
     type: 'Technical',
   },
   {
     role: 'Media Committee',
     organization: 'JBECP PUP',
-    period: '2024 – Present',
+    period: '2024 – 2025',
     type: 'Media',
   },
   {
