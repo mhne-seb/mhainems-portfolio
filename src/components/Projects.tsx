@@ -4,12 +4,13 @@ import StarBackground from './StarBackground';
 
 // Swiper Imports
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+// IMPORT: EffectFade for the "dissolve/live show" look
+import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
 
 // Swiper Styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import 'swiper/css/effect-fade'; // IMPORT FADE CSS
 
 // Import material images
 import material1 from '@/assets/materials/material-1.jpg';
@@ -64,7 +65,7 @@ import bear2 from '@/assets/bear/2.png';
 import bear3 from '@/assets/bear/3.png';
 import bear4 from '@/assets/bear/4.png';
 
-// Import Prototype images (Debug Your Brain)
+// Import Prototype images
 import proto1 from '@/assets/prototype/1.jpg';
 import proto2 from '@/assets/prototype/2.jpg';
 import proto3 from '@/assets/prototype/3.jpg';
@@ -179,13 +180,30 @@ const Projects = () => {
                 <div className="w-full lg:w-3/5">
                   <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl group">
                     <Swiper
+                      // ENABLE FADE EFFECT
+                      effect={'fade'}
+                      fadeEffect={{ crossFade: true }}
+                      
                       spaceBetween={0}
                       centeredSlides={true}
-                      autoplay={{ delay: 3500, disableOnInteraction: false }}
-                      pagination={{ clickable: true, dynamicBullets: true }}
-                      navigation={true}
-                      modules={[Autoplay, Pagination, Navigation]}
+                      // AUTOPLAY: 3 seconds delay before fading
+                      autoplay={{ delay: 3000, disableOnInteraction: false }}
+                      // SPEED: 1.5s fade duration for "Live Show" feel
+                      speed={1500} 
+                      
+                      pagination={{ clickable: true }}
+                      // Add EffectFade to modules
+                      modules={[Autoplay, Pagination, EffectFade]}
+                      
                       className="aspect-video w-full"
+                      // STYLING: Purple dots & Smaller size
+                      style={{
+                        "--swiper-pagination-color": "#a855f7",
+                        "--swiper-pagination-bullet-inactive-color": "#ffffff",
+                        "--swiper-pagination-bullet-inactive-opacity": "0.3",
+                        "--swiper-pagination-bullet-size": "6px",
+                        "--swiper-pagination-bullet-horizontal-gap": "4px"
+                      }}
                     >
                       {project.images.map((img, i) => (
                         <SwiperSlide key={i}>
@@ -203,7 +221,6 @@ const Projects = () => {
                 <div className="w-full lg:w-2/5 space-y-4">
                   <h3 className="text-3xl font-bold text-white font-display">{project.title}</h3>
                   
-                  {/* Render Role */}
                   {project.role && (
                     <div className="inline-block px-3 py-1 mb-2 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-semibold tracking-wide">
                         {project.role}
@@ -246,13 +263,11 @@ const Projects = () => {
                 <div
                   key={item.title}
                   onClick={() => openLightbox(index)}
-                  // Updated hover effect: Card moves up and scales slightly, image stays static
                   className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20"
                 >
                   <img 
                     src={item.src} 
                     alt={item.title} 
-                    // Removed 'group-hover:scale-110'
                     className="w-full h-full object-cover transition-transform duration-700" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">

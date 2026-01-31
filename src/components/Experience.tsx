@@ -1,78 +1,110 @@
 import { useEffect, useRef, useState } from 'react';
 import { Briefcase, Calendar } from 'lucide-react';
 
+// --- IMAGES IMPORT ---
+// Siguraduhin na tama ang path papunta sa 'org' folder mo.
+// Kung nasa 'src/assets/org' ang images at nasa 'src/components' ito:
+import org1 from '../assets/org/1.jpg';
+import org2 from '../assets/org/2.jpg';
+import org3 from '../assets/org/3.jpg';
+import org4 from '../assets/org/4.jpg';
+import org5 from '../assets/org/5.jpg';
+import org6 from '../assets/org/6.jpg';
+import org7 from '../assets/org/7.jpg';
+import org8 from '../assets/org/8.jpg';
+import org9 from '../assets/org/9.jpg';
+
 const experiences = [
   {
-    role: 'Web Development Cadet',
+    title: 'Web Development Cadet',
     organization: 'GDG PUP',
     period: '2025 – Present',
     type: 'Technical',
+    logo: org2,
+  },
+    {
+    title: 'Graphic Designer',
+    organization: 'Cisco NetConnect ',
+    period: '2024 – 2025',
+    type: 'Creative',
+    logo: org9,
   },
   {
-    role: 'Head of Public Relations & Community Involvement',
+    title: 'Head of Public Relations & Community Involvement',
     organization: 'IBITS',
     period: '2024 – 2025',
     type: 'Leadership',
+    logo: org4,
   },
   {
-    role: 'Web Development Team',
+    title: 'Web Development Team',
     organization: 'AWS Cloud Club PUP',
     period: '2024 – 2025',
     type: 'Technical',
+    logo: org1,
   },
   {
-    role: 'Creative Content Developer',
+    title: 'Creative Content Developer',
     organization: 'AWS Cloud Club PUP',
     period: '2024 – 2025',
     type: 'Creative',
+    logo: org1,
   },
   {
-    role: 'UI/UX Cadet',
+    title: 'UI/UX Cadet',
     organization: 'GDG PUP',
     period: '2024 – 2025',
     type: 'Design',
+    logo: org2,
   },
   {
-    role: 'Senior Marketing Associate',
+    title: 'Senior Marketing Associate',
     organization: 'GDG PUP',
     period: '2024 – 2025',
     type: 'Marketing',
+    logo: org2,
   },
   {
-    role: 'Mid-Level Back-End Web Developer',
+    title: 'Mid-Level Back-End Web Developer',
     organization: 'PUP MSC',
     period: '2024 – 2025',
     type: 'Technical',
+    logo: org6,
   },
   {
-    role: 'Media Committee',
+    title: 'Media Committee',
     organization: 'JBECP PUP',
     period: '2024 – 2025',
     type: 'Media',
+    logo: org5,
   },
   {
-    role: 'Media Intern',
+    title: 'Media Intern',
     organization: 'Youth Strike for Climate Change PH',
     period: '2022 – 2023',
     type: 'Media',
+    logo: org8,
   },
   {
-    role: 'Special Project Member',
+    title: 'Special Project Member',
     organization: 'PCSSG',
     period: '2022 – 2023',
     type: 'Project',
+    logo: org7,
   },
   {
-    role: 'Social Media Manager',
+    title: 'Social Media Manager',
     organization: 'Gender & Development',
     period: '2022 – 2023',
     type: 'Marketing',
+    logo: org3,
   },
   {
-    role: 'Technical Working Group',
+    title: 'Technical Working Group',
     organization: 'PROJECT SWAP',
     period: '2021 – 2022',
     type: 'Technical',
+    logo: org7,
   },
 ];
 
@@ -137,7 +169,7 @@ const Experience = () => {
             <div className="space-y-6">
               {experiences.map((exp, index) => (
                 <div
-                  key={`${exp.organization}-${exp.role}`}
+                  key={`${exp.organization}-${exp.title}`}
                   className={`relative pl-0 md:pl-20 ${
                     isVisible ? 'animate-fade-in-up' : 'opacity-0'
                   }`}
@@ -152,7 +184,7 @@ const Experience = () => {
                   <div className="glass-card p-6 group">
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
+                        <div className="flex items-center gap-3 mb-4">
                           <Briefcase className="w-4 h-4 text-primary" />
                           <span
                             className={`text-xs px-3 py-1 rounded-full border ${
@@ -162,12 +194,28 @@ const Experience = () => {
                             {exp.type}
                           </span>
                         </div>
-                        <h3 className="text-lg font-display font-semibold text-foreground group-hover:text-primary transition-colors">
-                          {exp.role}
-                        </h3>
-                        <p className="text-primary/80 font-medium mt-1">
-                          {exp.organization}
-                        </p>
+
+                        {/* --- ROLE TITLE WITH LARGER LOGO --- */}
+                        <div className="flex items-center gap-4">
+                            {exp.logo && (
+                                <img
+                                    src={exp.logo}
+                                    alt={`${exp.organization} logo`}
+                                    // Increased size to w-16 h-16 (64px)
+                                    className="w-16 h-16 rounded-full object-cover border-2 border-primary/20 bg-white/5"
+                                />
+                            )}
+                            <div>
+                                <h3 className="text-xl font-display font-bold text-foreground group-hover:text-primary transition-colorsls">
+                                    {exp.title}
+                                </h3>
+                                <p className="text-primary/80 font-medium mt-1">
+                                    {exp.organization}
+                                </p>
+                            </div>
+                        </div>
+                        {/* ----------------------------- */}
+
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Calendar className="w-4 h-4" />
