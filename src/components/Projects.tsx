@@ -19,7 +19,6 @@ import it4 from '@/assets/studio/5.png';
 import it5 from '@/assets/studio/6.png';
 
 // BAGONG IMPORTS PARA SA DATA/HOUSING PROJECT
-import data1 from '@/assets/data/1.png';
 import data2 from '@/assets/data/2.png';
 import data3 from '@/assets/data/3.png';
 import data4 from '@/assets/data/4.png';
@@ -90,7 +89,7 @@ const systemProjects = [
     role: 'UI/UX Designer',
     description: 'A Figma-based prototype designed to visualize and analyze housing affordability across different income brackets. The interface focuses on clarity and usability, helping users easily compare prices, understand financial capacity, and make informed housing decisions through an intuitive and user-centered design.',
     tech: ['Figma Prototyping'],
-    images: [data1, data2, data3, data4],
+    images: [data2, data3, data4],
   },
   {
     title: 'MediCare',
@@ -229,7 +228,7 @@ const Projects = () => {
             >
               <div className="bg-[#151318] rounded-[22px] p-8 md:p-12 h-full flex flex-col items-center text-center relative overflow-hidden">
                 <Palette className="w-16 h-16 text-pink-400 mb-6 group-hover:scale-110 transition-transform duration-500" />
-                <h3 className="text-xl font-sans font-normal uppercase tracking-[0.2em] text-white mb-3">Pubmat Materials</h3>
+                <h3 className="text-xl font-sans font-normal uppercase tracking-[0.2em] text-white mb-3">Public Materials</h3>
                 <p className="text-gray-500 text-[11px] uppercase tracking-widest font-sans font-normal">Graphics & Designs</p>
                 <div className="mt-8 px-5 py-2 rounded-lg border border-pink-500/30 text-pink-300 text-[10px] font-sans font-normal uppercase tracking-widest group-hover:bg-pink-500/10 transition-colors">
                   Open Folder
@@ -304,7 +303,7 @@ const Projects = () => {
         <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={() => setActiveFolder(null)} />
         <div className="relative w-full max-w-6xl max-h-[90vh] bg-[#0c0a10] border border-white/5 rounded-3xl shadow-2xl overflow-y-auto z-10">
           <div className="sticky top-0 z-50 flex items-center justify-between p-6 md:p-8 bg-[#0c0a10]/95 backdrop-blur-md border-b border-white/5">
-            <h2 className="text-sm font-sans font-normal uppercase tracking-[0.4em] text-white">Pubmat Materials</h2>
+            <h2 className="text-sm font-sans font-normal uppercase tracking-[0.4em] text-white">Public Materials</h2>
             <button onClick={() => setActiveFolder(null)} className="p-2 text-gray-500 hover:text-white transition-colors"><X size={20} /></button>
           </div>
 

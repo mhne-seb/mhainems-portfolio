@@ -55,19 +55,19 @@ const certifications = [
   { 
     title: 'Google Data Analytics Professional Certificate', 
     issuer: 'Google via Coursera', 
-    image: cert1,
+    image: cert2,
     description: 'An 8-course comprehensive program covering data cleaning, analysis, and visualization.'
   },
   { 
     title: 'Google Data Analytics Capstone', 
     issuer: 'Google via Coursera', 
-    image: cert2,
+    image: cert3,
     description: 'Practical application of data analytics skills to solve a real-world case study.'
   },
   { 
     title: 'Fundamentals of UI/UX Design', 
     issuer: 'Microsoft via Coursera', 
-    image: cert3,
+    image: cert1,
     description: 'Foundational principles of creating intuitive and visually appealing user interfaces.'
   }
 ];
