@@ -47,8 +47,8 @@ const Navbar = () => {
         </a>
 
         {/* DESKTOP NAVIGATION */}
-        <div className="hidden md:flex items-center gap-12 lg:gap-16">
-          <div className="flex items-center gap-10 lg:gap-14">
+        <div className="hidden md:flex items-center gap-8 lg:gap-12">
+          <div className="flex items-center gap-8 lg:gap-10">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -62,13 +62,25 @@ const Navbar = () => {
             ))}
           </div>
           
-          {/* White Contact Button - Minimalist Square-ish Style */}
-          <a
-            href="#contact"
-            className="px-7 py-2 bg-white text-black text-[11px] font-sans font-normal rounded-md hover:bg-purple-200 transition-all duration-300 uppercase tracking-[0.2em] shadow-lg shadow-white/5"
-          >
-            Contact
-          </a>
+          {/* ACTION BUTTONS */}
+          <div className="flex items-center gap-4 lg:gap-6">
+            {/* Download CV - Outline Style */}
+            <a
+              href="/Mhaine_Sebido_CV.pdf" 
+              download="Mhaine_Sebido_CV.pdf"
+              className="px-6 py-2 border border-white/30 text-white text-[11px] font-sans font-normal rounded-md hover:bg-white/10 hover:border-white transition-all duration-300 uppercase tracking-[0.2em]"
+            >
+              Download CV
+            </a>
+
+            {/* White Contact Button - Minimalist Square-ish Style */}
+            <a
+              href="#contact"
+              className="px-7 py-2 bg-white text-black text-[11px] font-sans font-normal rounded-md hover:bg-purple-200 transition-all duration-300 uppercase tracking-[0.2em] shadow-lg shadow-white/5"
+            >
+              Contact
+            </a>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -97,13 +109,27 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <a
-            href="#contact"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="mt-4 px-6 py-4 bg-white text-black rounded-lg font-normal font-sans uppercase tracking-[0.3em] text-[11px]"
-          >
-            Contact
-          </a>
+          
+          <div className="flex flex-col gap-4 mt-4">
+            {/* Mobile Download CV */}
+            <a
+              href="/path-to-your-cv.pdf"
+              download="Mhaine_Sebido_CV.pdf"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-6 py-4 border border-white/20 text-white rounded-lg font-normal font-sans uppercase tracking-[0.3em] text-[11px]"
+            >
+              Download CV
+            </a>
+
+            {/* Mobile Contact */}
+            <a
+              href="#contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-6 py-4 bg-white text-black rounded-lg font-normal font-sans uppercase tracking-[0.3em] text-[11px]"
+            >
+              Contact
+            </a>
+          </div>
         </div>
       </div>
     </nav>
