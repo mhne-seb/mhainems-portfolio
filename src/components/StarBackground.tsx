@@ -1,21 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-interface Star {
-  x: number;
-  y: number;
-  size: number;
-  opacity: number;
-  speed: number;
-}
-
-interface Constellation {
-  points: { x: number; y: number }[];
-}
-
-const StarBackground = () => {
+const AnimatedBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const starsRef = useRef<Star[]>([]);
-  const constellationsRef = useRef<Constellation[]>([]);
   const animationRef = useRef<number>();
 
   useEffect(() => {
@@ -25,113 +11,57 @@ const StarBackground = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    let width = 0;
+    let height = 0;
+
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initStars();
-      initConstellations();
-    };
-
-    const initStars = () => {
-      const starCount = Math.floor((canvas.width * canvas.height) / 8000);
-      starsRef.current = Array.from({ length: starCount }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.8 + 0.2,
-        speed: Math.random() * 0.0005 + 0.0002,
-      }));
-    };
-
-    const initConstellations = () => {
-      const constellationCount = 5;
-      constellationsRef.current = Array.from({ length: constellationCount }, () => {
-        const pointCount = Math.floor(Math.random() * 4) + 3;
-        const baseX = Math.random() * canvas.width;
-        const baseY = Math.random() * canvas.height;
-        
-        return {
-          points: Array.from({ length: pointCount }, (_, i) => ({
-            x: baseX + (Math.random() - 0.5) * 200,
-            y: baseY + (Math.random() - 0.5) * 200,
-          })),
-        };
-      });
-    };
-
-    const drawStar = (star: Star, time: number) => {
-      const twinkle = Math.sin(time * star.speed * 1000 + star.x) * 0.3 + 0.7;
-      const opacity = star.opacity * twinkle;
-      
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-      
-      const gradient = ctx.createRadialGradient(
-        star.x, star.y, 0,
-        star.x, star.y, star.size * 2
-      );
-      gradient.addColorStop(0, `hsla(270, 80%, 85%, ${opacity})`);
-      gradient.addColorStop(0.5, `hsla(270, 70%, 75%, ${opacity * 0.5})`);
-      gradient.addColorStop(1, 'transparent');
-      
-      ctx.fillStyle = gradient;
-      ctx.fill();
-    };
-
-    const drawConstellation = (constellation: Constellation) => {
-      if (constellation.points.length < 2) return;
-      
-      ctx.beginPath();
-      ctx.strokeStyle = 'hsla(270, 60%, 70%, 0.15)';
-      ctx.lineWidth = 1;
-      
-      constellation.points.forEach((point, i) => {
-        if (i === 0) {
-          ctx.moveTo(point.x, point.y);
-        } else {
-          ctx.lineTo(point.x, point.y);
-        }
-      });
-      
-      ctx.stroke();
-      
-      // Draw bright points at constellation vertices
-      constellation.points.forEach(point => {
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'hsla(270, 80%, 80%, 0.6)';
-        ctx.fill();
-      });
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
     };
 
     const animate = (time: number) => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Slow down the time variable for a very smooth, subtle movement
+      const t = time * 0.0004;
+
+      // 1. Fill the base canvas with deep black
+      ctx.fillStyle = '#030005'; 
+      ctx.fillRect(0, 0, width, height);
+
+      // 2. Create the first moving purple light (shifts left/right and up/down)
+      const x1 = width * 0.5 + Math.sin(t) * (width * 0.4);
+      const y1 = height * 0.5 + Math.cos(t * 0.8) * (height * 0.4);
+      const radius1 = Math.max(width, height) * 0.7; // Large, soft glow
+
+      const grad1 = ctx.createRadialGradient(x1, y1, 0, x1, y1, radius1);
+      grad1.addColorStop(0, 'rgba(75, 20, 120, 0.6)'); // Vibrant deep purple
+      grad1.addColorStop(1, 'rgba(75, 20, 120, 0)');   // Fades into the black
       
-      // Draw gradient overlay
-      const gradient = ctx.createRadialGradient(
-        canvas.width / 2, canvas.height / 3, 0,
-        canvas.width / 2, canvas.height / 3, canvas.height
-      );
-      gradient.addColorStop(0, 'hsla(270, 60%, 20%, 0.3)');
-      gradient.addColorStop(0.5, 'hsla(250, 50%, 15%, 0.2)');
-      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad1;
+      ctx.fillRect(0, 0, width, height);
+
+      // 3. Create a second moving dark violet light (moves in an opposite pattern)
+      const x2 = width * 0.5 + Math.sin(t * 1.2 + Math.PI) * (width * 0.3);
+      const y2 = height * 0.5 + Math.cos(t * 0.9 + Math.PI) * (height * 0.3);
+      const radius2 = Math.max(width, height) * 0.8;
+
+      const grad2 = ctx.createRadialGradient(x2, y2, 0, x2, y2, radius2);
+      grad2.addColorStop(0, 'rgba(30, 5, 60, 0.8)'); // Darker, moody violet
+      grad2.addColorStop(1, 'rgba(30, 5, 60, 0)');
       
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw constellations
-      constellationsRef.current.forEach(drawConstellation);
-      
-      // Draw stars
-      starsRef.current.forEach(star => drawStar(star, time));
-      
+      ctx.fillStyle = grad2;
+      ctx.fillRect(0, 0, width, height);
+
       animationRef.current = requestAnimationFrame(animate);
     };
 
+    // Initialize
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     animationRef.current = requestAnimationFrame(animate);
 
+    // Cleanup on unmount
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       if (animationRef.current) {
@@ -143,10 +73,19 @@ const StarBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="constellation-bg"
-      style={{ opacity: 0.8 }}
+      className="fluid-bg"
+      style={{ 
+        display: 'block', 
+        position: 'fixed', 
+        top: 0, 
+        left: 0, 
+        width: '100vw', 
+        height: '100vh', 
+        zIndex: -1,
+        pointerEvents: 'none' // Crucial: ensures the canvas doesn't block you from clicking your links!
+      }}
     />
   );
 };
 
-export default StarBackground;
+export default AnimatedBackground;

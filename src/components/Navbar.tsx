@@ -4,11 +4,9 @@ import { Menu, X } from 'lucide-react';
 import mascot from '../assets/mascot.png'; 
 
 const navLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '#' },
+  { name: 'About Me', href: '#about' },
+  { name: 'Works', href: '#projects' },
 ];
 
 const Navbar = () => {
@@ -19,95 +17,95 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
         isScrolled
-          ? 'bg-background/80 backdrop-blur-lg border-b border-border/50 py-4'
-          : 'bg-transparent py-6'
-      }`}
+          ? 'bg-black/60 backdrop-blur-xl border-b border-white/5'
+          : 'bg-transparent'
+      } py-5`} 
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo Section */}
+        
+        {/* LOGO SECTION */}
         <a
           href="#"
-          // Added 'flex items-center gap-2' to align image and text
-          className="flex items-center gap-2 text-xl md:text-2xl font-display font-bold text-glow transition-all duration-300 hover:opacity-80"
+          className="flex items-center gap-3 transition-opacity hover:opacity-80 group"
         >
-          {/* Mascot Image */}
           <img 
             src={mascot} 
             alt="Mascot" 
-            className="h-10 w-auto object-contain" 
+            className="h-7 w-auto object-contain brightness-110" 
           />
-          {/* Portfolio Text */}
-          <span className="bg-accent-gradient bg-clip-text text-transparent hidden md:block">
-            Mhaine's Portfolio
-          </span>
-          {/* Mobile Text (Optional: Show only 'Portfolio' or keep full text on mobile if space allows) */}
-           <span className="bg-accent-gradient bg-clip-text text-transparent md:hidden">
-            Portfolio
+          <span className="text-white text-base md:text-lg font-sans font-light tracking-[0.15em] uppercase transition-all group-hover:tracking-[0.25em]">
+            mhaine sebido
           </span>
         </a>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="relative text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm font-medium group"
-            >
-              {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-            </a>
-          ))}
+        {/* DESKTOP NAVIGATION */}
+        <div className="hidden md:flex items-center gap-12 lg:gap-16">
+          <div className="flex items-center gap-10 lg:gap-14">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-[11px] lg:text-[12px] text-gray-400 hover:text-white transition-all duration-300 font-sans font-normal tracking-[0.2em] uppercase relative group"
+              >
+                {link.name}
+                {/* Minimalist Underline Hover */}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
+              </a>
+            ))}
+          </div>
+          
+          {/* White Contact Button - Minimalist Square-ish Style */}
           <a
             href="#contact"
-            className="btn-cosmic text-sm text-primary-foreground"
+            className="px-7 py-2 bg-white text-black text-[11px] font-sans font-normal rounded-md hover:bg-purple-200 transition-all duration-300 uppercase tracking-[0.2em] shadow-lg shadow-white/5"
           >
-            Get in Touch
+            Contact
           </a>
         </div>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-foreground"
+          className="md:hidden p-2 text-white"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-lg border-b border-border/50 py-6 animate-fade-in">
-          <div className="container mx-auto px-6 flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-lg font-medium py-2"
-              >
-                {link.name}
-              </a>
-            ))}
+      {/* MOBILE MENU */}
+      <div 
+        className={`md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-3xl border-b border-white/10 transition-all duration-300 overflow-hidden ${
+          isMobileMenuOpen ? 'opacity-100 visible py-10' : 'opacity-0 invisible h-0'
+        }`}
+      >
+        <div className="container mx-auto px-6 flex flex-col gap-8 text-center">
+          {navLinks.map((link) => (
             <a
-              href="#contact"
+              key={link.name}
+              href={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="btn-cosmic text-center mt-4 text-primary-foreground"
+              className="text-gray-400 text-[12px] font-sans font-normal tracking-[0.3em] uppercase hover:text-white"
             >
-              Get in Touch
+              {link.name}
             </a>
-          </div>
+          ))}
+          <a
+            href="#contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="mt-4 px-6 py-4 bg-white text-black rounded-lg font-normal font-sans uppercase tracking-[0.3em] text-[11px]"
+          >
+            Contact
+          </a>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

@@ -66,28 +66,35 @@ const Contact = () => {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 overflow-hidden z-10"
     >
-      <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto">
-          {/* Section Header */}
-          <div className={`text-center mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <span className="text-primary text-sm uppercase tracking-widest font-medium">
-              Get in Touch
-            </span>
-            <h2 className="section-title mt-4">
-              Let's Connect
-            </h2>
-            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Have a project in mind or just want to say hello? I'd love to hear from you.
-            </p>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="max-w-6xl mx-auto flex flex-col items-center">
+          
+          {/* --- ELEGANT HEADER SECTION ("contact me") --- */}
+          <div className={`relative w-fit mb-8 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="absolute left-[-20px] top-[-20px] bottom-[-10px] w-[1px] bg-white/40" />
+            <div className="absolute left-[-50px] right-[-50px] bottom-[10px] md:bottom-[14px] h-[1px] bg-white/40" />
+            
+            <div className="flex items-baseline pl-2 relative z-10">
+              <h2 className="text-6xl md:text-8xl text-white font-normal lowercase tracking-wide font-serif-elegant">
+                contact
+              </h2>
+              <span className="text-6xl md:text-8xl text-white lowercase ml-6 font-script">
+                me
+              </span>
+            </div>
           </div>
 
-          {/* Content Grid */}
-          <div className="grid lg:grid-cols-2 gap-12">
+          <p className={`text-gray-400 text-center mb-16 max-w-2xl mx-auto transition-all duration-1000 delay-150 font-sans font-normal tracking-wide uppercase text-[13px] ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+            Have a project in mind or just want to say hello? I'd love to hear from you.
+          </p>
+
+          <div className="grid lg:grid-cols-2 gap-12 w-full">
+            
             {/* Left: Contact Info */}
-            <div className={`${isVisible ? 'animate-fade-in-left delay-200' : 'opacity-0'}`}>
-              <h3 className="text-2xl font-display font-semibold text-foreground mb-8">
+            <div className={`${isVisible ? 'animate-fade-in-left delay-300' : 'opacity-0'}`}>
+              <h3 className="text-lg font-sans font-normal uppercase tracking-widest text-white mb-8 border-l-2 border-primary pl-4">
                 Contact Information
               </h3>
 
@@ -98,15 +105,15 @@ const Contact = () => {
                     href={info.href}
                     target={info.label === 'LinkedIn' ? '_blank' : undefined}
                     rel={info.label === 'LinkedIn' ? 'noopener noreferrer' : undefined}
-                    className="glass-card p-5 flex items-center gap-4 group"
+                    className="glass-card p-5 flex items-center gap-4 group hover:bg-white/[0.03] transition-all"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <info.icon className="w-5 h-5 text-primary" />
+                    <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <info.icon className="w-4 h-4 text-gray-400 group-hover:text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">{info.label}</p>
-                      <p className="text-foreground font-medium group-hover:text-primary transition-colors">
+                      <p className="text-[11px] uppercase tracking-widest text-gray-500 font-sans">{info.label}</p>
+                      <p className="text-gray-300 font-sans font-normal text-[14px] tracking-wide group-hover:text-white transition-colors">
                         {info.value}
                       </p>
                     </div>
@@ -115,75 +122,75 @@ const Contact = () => {
               </div>
 
               {/* Location */}
-              <div className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20">
+              <div className="mt-8 p-6 rounded-2xl bg-white/[0.02] border border-white/5">
                 <div className="flex items-center gap-3 mb-3">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <span className="text-foreground font-medium">Location</span>
+                  <MapPin className="w-4 h-4 text-primary" />
+                  <span className="text-white font-sans font-normal uppercase tracking-widest text-xs">Location</span>
                 </div>
-                <p className="text-muted-foreground">
+                <p className="text-gray-400 font-sans text-sm tracking-wide">
                   Philippines • Open to Remote Opportunities
                 </p>
               </div>
             </div>
 
             {/* Right: Contact Form */}
-            <div className={`${isVisible ? 'animate-fade-in-right delay-200' : 'opacity-0'}`}>
-              <div className="glass-card p-8">
-                <h3 className="text-xl font-display font-semibold text-foreground mb-6">
+            <div className={`${isVisible ? 'animate-fade-in-right delay-500' : 'opacity-0'}`}>
+              <div className="glass-card p-8 bg-white/[0.02]">
+                <h3 className="text-lg font-sans font-normal uppercase tracking-widest text-white mb-6">
                   Send a Message
                 </h3>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label className="text-sm text-muted-foreground mb-2 block">
+                    <label className="text-[11px] uppercase tracking-widest text-gray-500 mb-2 block font-sans">
                       Your Name
                     </label>
                     <Input
                       type="text"
-                      placeholder="John Doe"
+                      placeholder="NAME"
                       value={formData.name}
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
                       required
-                      className="bg-secondary/50 border-border/50 focus:border-primary"
+                      className="bg-transparent border-white/10 focus:border-primary font-sans font-normal tracking-wide text-sm placeholder:text-gray-700"
                     />
                   </div>
 
                   <div>
-                    <label className="text-sm text-muted-foreground mb-2 block">
+                    <label className="text-[11px] uppercase tracking-widest text-gray-500 mb-2 block font-sans">
                       Your Email
                     </label>
                     <Input
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder="EMAIL"
                       value={formData.email}
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
                       required
-                      className="bg-secondary/50 border-border/50 focus:border-primary"
+                      className="bg-transparent border-white/10 focus:border-primary font-sans font-normal tracking-wide text-sm placeholder:text-gray-700"
                     />
                   </div>
 
                   <div>
-                    <label className="text-sm text-muted-foreground mb-2 block">
+                    <label className="text-[11px] uppercase tracking-widest text-gray-500 mb-2 block font-sans">
                       Message
                     </label>
                     <Textarea
-                      placeholder="Tell me about your project..."
+                      placeholder="YOUR MESSAGE..."
                       value={formData.message}
                       onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
                       }
                       required
                       rows={5}
-                      className="bg-secondary/50 border-border/50 focus:border-primary resize-none"
+                      className="bg-transparent border-white/10 focus:border-primary font-sans font-normal tracking-wide text-sm resize-none placeholder:text-gray-700"
                     />
                   </div>
 
-                  <Button type="submit" className="btn-cosmic w-full text-primary-foreground gap-2">
-                    <Send className="w-4 h-4" />
+                  <Button type="submit" className="w-full bg-white text-black hover:bg-gray-200 transition-all font-sans font-normal uppercase tracking-widest text-xs py-6">
+                    <Send className="w-3 h-3 mr-2" />
                     Send Message
                   </Button>
                 </form>
@@ -194,8 +201,8 @@ const Contact = () => {
       </div>
 
       {/* Background Decoration */}
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-primary/5 rounded-full blur-[150px]" />
-      <div className="absolute top-1/4 right-0 w-1/4 h-1/3 bg-accent/5 rounded-full blur-[150px]" />
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-primary/5 rounded-full blur-[150px] -z-10" />
+      <div className="absolute top-1/4 right-0 w-1/4 h-1/3 bg-accent/5 rounded-full blur-[150px] -z-10" />
     </section>
   );
 };
